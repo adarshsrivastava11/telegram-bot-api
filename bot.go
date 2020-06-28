@@ -564,14 +564,15 @@ func (bot *BotAPI) ListenForWebhook(pattern string) UpdatesChannel {
 	return ch
 }
 
+// HandleUpdate parses and returns update received via webhook
 func (bot *BotAPI) HandleUpdate(res http.ResponseWriter, req *http.Request) Update {
-  bytes, _ := ioutil.ReadAll(req.Body)
-  req.Body.Close()
+	bytes, _ := ioutil.ReadAll(req.Body)
+	req.Body.Close()
 
-  var update Update
-  json.Unmarshal(bytes, &update)
+	var update Update
+	json.Unmarshal(bytes, &update)
 
-  return update
+	return update
 }
 
 // AnswerInlineQuery sends a response to an inline query.
