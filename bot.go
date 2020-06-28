@@ -558,10 +558,20 @@ func (bot *BotAPI) ListenForWebhook(pattern string) UpdatesChannel {
 		var update Update
 		json.Unmarshal(bytes, &update)
 
-		ch <- update
+		ch <- bot.HandleUpdate(w, r)
 	})
 
 	return ch
+}
+
+func (bot *BotAPI) HandleUpdate(res http.ResponseWriter, req *http.Request) Update {
+  bytes, _ := ioutil.ReadAll(req.Body)
+  req.Body.Close()
+
+  var update Update
+  json.Unmarshal(bytes, &update)
+
+  return update
 }
 
 // AnswerInlineQuery sends a response to an inline query.
