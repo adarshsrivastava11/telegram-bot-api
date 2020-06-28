@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/go-telegram-bot-api/telegram-bot-api"
+	tgbotapi "github.com/adarshsrivastava11/telegram-bot-api"
 )
 
 const (
@@ -94,13 +94,12 @@ func ExampleWebhookHandler() {
 		log.Printf("[Telegram callback failed]%s", info.LastErrorMessage)
 	}
 
-	http.HandleFunc("/" + bot.Token, func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/"+bot.Token, func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("%+v\n", bot.HandleUpdate(w, r))
 	})
 
 	go http.ListenAndServeTLS("0.0.0.0:8443", "cert.pem", "key.pem", nil)
 }
-
 
 func TestSendWithMessageReply(t *testing.T) {
 	bot, _ := getBot(t)
